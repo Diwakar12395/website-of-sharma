@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sharma Enterprises · Premium Furniture & Interiors</title>
+  <meta name="description" content="Sharma Enterprises — furniture, interiors, plywood & hardware. Owner: Deepu Sharma" />
+  <style>
+    /* Minimal reset + nice system font */
+    :root{
+      --bg:#0f1720; /* deep neutral */
+      --card:#0b1020;
+      --muted:#95a5b3;
+      --accent:#f6b042; /* warm gold */
+      --accent-2:#ffd8a8;
+      --glass: rgba(255,255,255,0.04);
+      --radius:18px;
+      --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto; background:linear-gradient(180deg,#07111a 0%, #0f1720 100%);color:#e6eef6}
+    a{color:inherit}
+
+    .site{max-width:var(--max);margin:28px auto;padding:24px}
+
+    header{display:flex;align-items:center;gap:18px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#c77a28);display:flex;align-items:center;justify-content:center;font-weight:800;color:#06202a}
+    .title{font-size:1.4rem;font-weight:700}
+    .subtitle{color:var(--muted);font-size:0.9rem}
+
+    /* top nav / actions */
+    .actions{margin-left:auto;display:flex;gap:12px;align-items:center}
+    .btn{background:linear-gradient(180deg,var(--accent),#d18c34);border:none;padding:10px 14px;border-radius:12px;color:#07111a;font-weight:700;cursor:pointer}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:12px;color:var(--accent);cursor:pointer}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;margin-top:22px;align-items:center}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:18px;box-shadow:0 8px 40px rgba(2,6,23,0.6)}
+    .hero h1{margin:0;font-size:2rem}
+    .hero p{color:var(--muted);margin-top:10px}
+
+    /* search + filters */
+    .search-row{display:flex;gap:12px;margin-top:18px}
+    .search-row input{flex:1;padding:12px;border-radius:12px;border:none;background:var(--glass);color:inherit}
+    .filters{display:flex;gap:8px}
+    .pill{padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:999px;color:var(--muted);cursor:pointer}
+    .pill.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#082027;font-weight:700}
+
+    /* product grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+    .product{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:12px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.03)}
+    .media{height:180px;border-radius:12px;overflow:hidden}
+    .media img{width:100%;height:100%;object-fit:cover;display:block}
+    .meta{padding:12px}
+    .meta h3{margin:0;font-size:1.05rem}
+    .meta p{margin:6px 0;color:var(--muted);font-size:0.9rem}
+    .price{font-weight:800;color:var(--accent);margin-top:6px}
+    .product .fav{position:absolute;right:12px;top:12px;background:rgba(0,0,0,0.4);padding:8px;border-radius:10px}
+
+    /* responsive */
+    @media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.site{padding:12px}}
+
+    /* modal */
+    .modal-back{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:18px;z-index:90}
+    .modal{width:min(920px,96%);background:linear-gradient(180deg,#08131b,#0b1722);padding:18px;border-radius:16px;color:#dbeef9;display:grid;grid-template-columns:420px 1fr;gap:16px}
+    .modal .mimg{border-radius:12px;overflow:hidden}
+    .modal h2{margin:0}
+    .specs{color:var(--muted);margin-top:8px}
+    .rec{margin-top:12px;display:flex;gap:8px}
+    .rec .mini{width:86px;height:86px;border-radius:10px;overflow:hidden}
+
+    footer{margin-top:34px;padding:24px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;justify-content:space-between;align-items:center}
+    footer .left{color:var(--muted)}
+
+    /* small helpers */
+    .tag{display:inline-block;padding:6px 8px;background:rgba(255,255,255,0.02);border-radius:8px;color:var(--muted);font-size:0.85rem}
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div class="logo">SE</div>
+        <div>
+          <div class="title">Sharma Enterprises</div>
+          <div class="subtitle">Furniture • Interiors • Plywood • Hardware</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="ghost" onclick="window.generateCatalog()">Generate Catalog (PDF)</button>
+        <button class="btn" onclick="window.openContact()">Get a Quote</button>
+      </div>
+    </header>
+
+    <div class="hero">
+      <div class="hero-card">
+        <h1>Design-led furniture and complete interiors — owner Deepu Sharma</h1>
+        <p>Create beautiful spaces with our curated Sanmaika textures, premium plywood, and trusted hardware. Browse products, explore designs, and request a custom quote.</p>
+
+        <div class="search-row">
+          <input id="q" placeholder="Search products, plywood types, hardware..." oninput="window.filterGrid()">
+          <div class="filters">
+            <div class="pill active" data-filter="all" onclick="window.setFilter(this)">All</div>
+            <div class="pill" data-filter="furniture" onclick="window.setFilter(this)">Furniture</div>
+            <div class="pill" data-filter="plywood" onclick="window.setFilter(this)">Plywood</div>
+            <div class="pill" data-filter="hardware" onclick="window.setFilter(this)">Hardware</div>
+            <div class="pill" data-filter="interiors" onclick="window.setFilter(this)">Interiors</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <div class="tag">Free design consult</div>
+          <div class="tag">Nationwide delivery</div>
+          <div class="tag">Custom sizes available</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6)">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=60&auto=format&fit=crop" alt="feature" style="width:100%;height:320px;object-fit:cover;display:block;border-radius:14px">
+        </div>
+        <div style="display:flex;gap:10px">
+          <img src="https://images.unsplash.com/photo-1598300056398-4d5c2b01b9b9?w=300&q=60&auto=format&fit=crop" style="width:50%;height:120px;object-fit:cover;border-radius:12px">
+          <img src="https://images.unsplash.com/photo-1616627457489-8b8b1f3fef8a?w=300&q=60&auto=format&fit=crop" style="width:50%;height:120px;object-fit:cover;border-radius:12px">
+        </div>
+      </div>
+    </div>
+
+    <section style="margin-top:28px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <h2 style="margin:0">Featured Products</h2>
+        <div style="color:var(--muted)">Showing <span id="count">0</span> results</div>
+      </div>
+
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <footer>
+      <div class="left">© Sharma Enterprises — Owner: Deepu Sharma</div>
+      <div class="right">Contact: +91 7481824717 • info@sharmaenterprises.in</div>
+    </footer>
+  </div>
+
+  <!-- product modal -->
+  <div class="modal-back" id="modalBack" onclick="if(event.target.id==='modalBack')window.closeModal()">
+    <div class="modal" role="dialog" id="modal">
+      <div class="mimg"><img id="mimg" src="" style="width:100%;height:100%;object-fit:cover"></div>
+      <div>
+        <h2 id="mtitle">Product</h2>
+        <div class="specs" id="mdesc">Details</div>
+        <div style="margin-top:12px;font-weight:800;color:var(--accent)" id="mprice">₹0</div>
+        <div style="margin-top:16px;display:flex;gap:8px">
+          <button class="btn" onclick="window.addToInquiry()">Request Quote</button>
+          <button class="ghost" onclick="window.closeModal()">Close</button>
+        </div>
+
+        <div style="margin-top:18px">
+          <div style="color:var(--muted);font-size:0.95rem;margin-bottom:8px">You may also like</div>
+          <div class="rec" id="recs"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // make core data global so handlers attached to window can always access
+    window.PRODUCTS = [
+      {id:1,cat:'furniture',name:'Solid Wood Dining Table',price:12999,desc:'6-seater solid wood dining table with Sanmaika finish',img:'https://images.unsplash.com/photo-1582582494707-9d2b6a6d0b51?w=900&q=60&auto=format&fit=crop'},
+      {id:2,cat:'furniture',name:'Classic Bed Frame',price:13999,desc:'King size bed frame — sturdy and stylish',img:'https://images.unsplash.com/photo-1616627561904-9b8f99b38a2c?w=900&q=60&auto=format&fit=crop'},
+      {id:3,cat:'hardware',name:'Premium Door Lock',price:899,desc:'Brass door lock with chrome finish',img:'https://images.unsplash.com/photo-1597003101515-8f3c36c1df15?w=900&q=60&auto=format&fit=crop'},
+      {id:4,cat:'plywood',name:'Green Plywood',price:180,desc:'Eco-friendly long-life plywood, 19mm (price per sq.ft)',img:'https://images.unsplash.com/photo-1603584177610-5d08d22f8b6d?w=900&q=60&auto=format&fit=crop'},
+      {id:5,cat:'plywood',name:'Marine Grade Plywood',price:160,desc:'Waterproof plywood ideal for kitchens & wet areas',img:'https://images.unsplash.com/photo-1598300056465-b1d1a3daadeb?w=900&q=60&auto=format&fit=crop'},
+      {id:6,cat:'interiors',name:'Modular Kitchen L-shape',price:1200,desc:'Complete L-shape modular kitchen (price per sq.ft, installation included)',img:'https://images.unsplash.com/photo-1600585154207-604e8a8ed16f?w=900&q=60&auto=format&fit=crop'},
+      {id:7,cat:'hardware',name:'Soft Close Drawer Channel',price:499,desc:'Steel soft-close drawer channel for smooth operation',img:'https://images.unsplash.com/photo-1623244586013-f7fdb317790a?w=900&q=60&auto=format&fit=crop'},
+      {id:8,cat:'plywood',name:'Decorative Veneer Ply',price:200,desc:'Veneered plywood with polished surface (per sq.ft)',img:'https://images.unsplash.com/photo-1600585154207-604e8a8ed16f?w=900&q=60&auto=format&fit=crop'},
+      {id:9,cat:'furniture',name:'Ergonomic Office Chair',price:4999,desc:'Comfort chair for long working hours',img:'https://images.unsplash.com/photo-1589571894960-20bbe2828b89?w=900&q=60&auto=format&fit=crop'},
+      {id:10,cat:'hardware',name:'Designer Door Handle',price:599,desc:'Aluminium handle with antique brass finish',img:'https://images.unsplash.com/photo-1575936123452-b67c3203c357?w=900&q=60&auto=format&fit=crop'}
+    ];
+
+    // grab DOM refs
+    const grid = document.getElementById('grid');
+    const countEl = document.getElementById('count');
+    window.activeFilter = 'all';
+
+    // render grid (exposed for filtering)
+    window.renderGrid = function(list){
+      grid.innerHTML = '';
+      list.forEach(p=>{
+        const el = document.createElement('div'); el.className='product';
+        el.innerHTML = `
+          <div class="media"><img src="${p.img}" alt="${p.name}"></div>
+          <div class="meta">
+            <h3>${p.name}</h3>
+            <p>${p.desc}</p>
+            <div class="price">${p.cat==='plywood' ? '₹'+p.price+ ' / sq.ft' : '₹'+p.price.toLocaleString('en-IN')}</div>
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button class="btn" onclick="window.openModal(${p.id})">View</button>
+              <button class="ghost" onclick="window.quickAdd(${p.id})">Add</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+      countEl.textContent = list.length;
+    };
+
+    // initial render
+    window.renderGrid(window.PRODUCTS);
+
+    // filter helpers
+    window.setFilter = function(el){
+      document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+      el.classList.add('active');
+      window.activeFilter = el.dataset.filter;
+      window.filterGrid();
+    };
+
+    window.filterGrid = function(){
+      const q = (document.getElementById('q') && document.getElementById('q').value.trim().toLowerCase()) || '';
+      const filtered = window.PRODUCTS.filter(p=>{
+        if(window.activeFilter!=='all' && p.cat!==window.activeFilter) return false;
+        if(!q) return true;
+        return (p.name+ ' ' + p.desc + ' ' + p.cat).toLowerCase().includes(q);
+      });
+      window.renderGrid(filtered);
+    };
+
+    // modal functions
+    window.openModal = function(id){
+      const p = window.PRODUCTS.find(x=>x.id===id);
+      if(!p) return;
+      document.getElementById('mimg').src = p.img;
+      document.getElementById('mtitle').textContent = p.name;
+      document.getElementById('mdesc').textContent = p.desc + (p.cat==='plywood' ? ' (Price per sq.ft)' : '');
+      document.getElementById('mprice').textContent = p.cat==='plywood' ? '₹'+p.price+' / sq.ft' : '₹'+p.price.toLocaleString('en-IN');
+
+      // recommendations: same category, top 3
+      const recs = window.PRODUCTS.filter(x=>x.cat===p.cat && x.id!==p.id).slice(0,3);
+      const recsEl = document.getElementById('recs'); recsEl.innerHTML='';
+      recs.forEach(r=>{ const d = document.createElement('div'); d.className='mini'; d.innerHTML = `<img src="${r.img}" style="width:100%;height:100%;object-fit:cover">`; d.onclick=()=>window.openModal(r.id); recsEl.appendChild(d); });
+
+      const modalBack = document.getElementById('modalBack');
+      modalBack.style.display='flex';
+    };
+
+    window.closeModal = function(){
+      const modalBack = document.getElementById('modalBack');
+      modalBack.style.display='none';
+    };
+
+    window.quickAdd = function(id){ alert('Added to inquiry list — we will contact you. (Demo)') };
+    window.addToInquiry = function(){ alert('Quote requested — we will contact you. (Demo)'); window.closeModal(); };
+
+    window.openContact = function(){ window.location.href='mailto:info@sharmaenterprises.in?subject=Request%20a%20quote%20from%20website' };
+
+    // Generate printable catalog (opens new window with catalog content and triggers print)
+    window.generateCatalog = function(){
+      const itemsHtml = window.PRODUCTS.map(p=>{
+        return `<div style="display:flex;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #eee">\n                  <img src="${p.img}" style="width:120px;height:80px;object-fit:cover">\n                  <div>\n                    <strong>${p.name}</strong>\n                    <div style="color:#666;margin-top:6px">${p.desc}</div>\n                    <div style="margin-top:6px;color:#b35f0e">${p.cat==='plywood'? '₹'+p.price+' / sq.ft' : '₹'+p.price.toLocaleString('en-IN')}</div>\n                  </div>\n                </div>`;
+      }).join('\n');
+
+      const win = window.open('','_blank','width=900,height=700');
+      // write a complete, well-formed HTML document to the new window
+      const docHtml = `
+        <!doctype html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1">
+          <title>Sharma Enterprises Catalog</title>
+          <style>body{font-family:Arial,Helvetica,sans-serif;margin:24px;color:#222} h1{color:#4e342e}</style>
+        </head>
+        <body>
+          <h1>Sharma Enterprises — Catalog</h1>
+          <p>Owner: Deepu Sharma</p>
+          ${itemsHtml}
+          <script>
+            // wait a short moment then open print dialog
+            setTimeout(function(){ window.print(); }, 600);
+          <\/script>
+        </body>
+        </html>
+      `;
+
+      // Use open/write/close to ensure document is properly written
+      win.document.open();
+      win.document.write(docHtml);
+      win.document.close();
+      win.focus();
+    };
+
+  </script>
+</body>
+</html>
